@@ -10,6 +10,10 @@ const section1 = document.querySelector('#section--1');
 
 const navLinks = document.querySelector('.nav__links');
 
+const tabContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+
 // MODAL WINDOW
 
 const openModal = function (e) {
@@ -52,3 +56,24 @@ const navigateSmooth = function (e) {
 
 // Attached same event for multiples elements
 navLinks.addEventListener('click', navigateSmooth);
+
+// TABBED COMPONENT
+
+const tabClick = e => {
+  const clickedTab = e.target.closest('.operations__tab');
+
+  // Guard clause
+  if (!clickedTab) return;
+
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clickedTab.classList.add('operations__tab--active');
+
+  tabsContent.forEach(content =>
+    content.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${clickedTab.dataset.tab}`)
+    .classList.add('operations__content--active');
+};
+
+tabContainer.addEventListener('click', tabClick);
