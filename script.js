@@ -8,6 +8,7 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+const nav = document.querySelector('.nav');
 const navLinks = document.querySelector('.nav__links');
 
 const tabContainer = document.querySelector('.operations__tab-container');
@@ -77,3 +78,27 @@ const tabClick = e => {
 };
 
 tabContainer.addEventListener('click', tabClick);
+
+// MENU FADE ANIMATION
+
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const navLinkSelected = e.target;
+    const navLinks = navLinkSelected
+      .closest('.nav')
+      .querySelectorAll('.nav__link');
+    const logo = navLinkSelected.closest('.nav').querySelector('img');
+
+    navLinks.forEach(navLink => {
+      if (navLink !== navLinkSelected) {
+        navLink.style.opacity = this.opacity;
+      }
+    });
+
+    logo.style.opacity = this.opacity;
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind({ opacity: 0.5 }));
+
+nav.addEventListener('mouseout', handleHover.bind({ opacity: 1 }));
