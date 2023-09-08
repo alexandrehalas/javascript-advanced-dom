@@ -9,6 +9,7 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const allSections = document.querySelectorAll('.section');
 
 const nav = document.querySelector('.nav');
 const navLinks = document.querySelector('.nav__links');
@@ -125,3 +126,28 @@ const headerObserver = new IntersectionObserver(
   headerObserverOptions
 );
 headerObserver.observe(header);
+
+// REVEALING ELEMENTS ON SCROLL
+
+const reviewSections = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const sectionObserverOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const sectionObserver = new IntersectionObserver(
+  reviewSections,
+  sectionObserverOptions
+);
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
