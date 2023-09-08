@@ -18,6 +18,9 @@ const tabContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+// STARTS PAGE ON TOP
+window.scrollTo(0, 0);
+
 // MODAL WINDOW
 
 const openModal = function (e) {
