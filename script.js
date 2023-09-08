@@ -1,5 +1,7 @@
 'use strict';
 
+const header = document.querySelector('.header');
+
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -102,3 +104,24 @@ const handleHover = function (e) {
 nav.addEventListener('mouseover', handleHover.bind({ opacity: 0.5 }));
 
 nav.addEventListener('mouseout', handleHover.bind({ opacity: 1 }));
+
+// STICKY NAVIGATION
+
+const stickNav = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+};
+const headerObserverOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: `${-nav.getBoundingClientRect().height}px`,
+};
+const headerObserver = new IntersectionObserver(
+  stickNav,
+  headerObserverOptions
+);
+headerObserver.observe(header);
