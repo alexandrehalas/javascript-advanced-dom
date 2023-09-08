@@ -18,6 +18,8 @@ const tabContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 
+const imagesTargets = document.querySelectorAll('img[data-src]');
+
 // STARTS PAGE ON TOP
 window.scrollTo(0, 0);
 
@@ -134,7 +136,6 @@ headerObserver.observe(header);
 
 const reviewSections = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   observer.unobserve(entry.target);
@@ -154,3 +155,31 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// LAZY LOADING IMAGES
+
+const loadImages = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imagesObserverOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+};
+
+const imagesObserver = new IntersectionObserver(
+  loadImages,
+  imagesObserverOptions
+);
+
+imagesTargets.forEach(image => imagesObserver.observe(image));
